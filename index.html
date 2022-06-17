@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+    integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div id="box">
+
+  </div>
+  <input type="text" id="message" />
+  <button id='btn'>Envoyer</button>
+</body>
+
+<script>
+  const socket = io('http://localhost:3000');
+  socket.on('connect', function () {
+    console.log('Connected');
+
+    socket.emit('events', { test: 'test' });
+    socket.emit('identity', 0, response =>
+      console.log('Identity:', response),
+    );
+  });
+
+  const handleMessageEmit = () => {
+    socket.emit('message', { data: document.getElementById('message').value })
+    document.getElementById('message').value = '';
+  }
+
+  const msg = [];
+  socket.on('message', ({ data }) => {
+    msg.push(data);
+    let str = '';
+    for (const elt of msg) str += `<p>${elt}</p>`;
+    document.getElementById('box').innerHTML = str;
+  })
+
+  document.getElementById('btn').addEventListener('click', handleMessageEmit)
+
+</script>
+
+</html>
