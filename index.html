@@ -4,18 +4,28 @@
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"
     integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
     crossorigin="anonymous"></script>
-
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <div id="box">
+  <main>
+    <div id="login" class="login">
+      <label for="userName">Entrez votre nom:</label>
+      <input type="text" id="userName" />
+      <button id="logbtn">Confirmer</button>
+    </div>
+    <div id="box" style="display: none;" class="messageBox">
 
-  </div>
-  <input type="text" id="message" />
-  <button id='btn'>Envoyer</button>
+    </div>
+    <div id="messageSend" style="display: none;">
+      <input type="text" id="message" />
+      <button id='btn'>Envoyer</button>
+    </div>
+  </main>
 </body>
 
 <script>
+  let userName = '';
   const socket = io('https://chat-app-tl.herokuapp.com/');
   socket.on('connect', function () {
     console.log('Connected');
@@ -27,8 +37,16 @@
   });
 
   const handleMessageEmit = () => {
-    socket.emit('message', { data: document.getElementById('message').value })
+    socket.emit('message', { data: userName + ": " + document.getElementById('message').value })
     document.getElementById('message').value = '';
+  }
+
+  const handleInscription = () => {
+    userName = document.getElementById('userName').value;
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('box').style.display = 'unset';
+    document.getElementById('messageSend').style.display = 'unset';
+    socket.emit("message", { data: `${userName} rejoint le chat` })
   }
 
   const msg = [];
@@ -38,6 +56,8 @@
     for (const elt of msg) str += `<p>${elt}</p>`;
     document.getElementById('box').innerHTML = str;
   })
+
+  document.getElementById('logbtn').addEventListener('click', handleInscription)
 
   document.getElementById('btn').addEventListener('click', handleMessageEmit)
 

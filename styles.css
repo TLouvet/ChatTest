@@ -1,0 +1,50 @@
+.login {
+  background-color: antiquewhite;
+  box-shadow: 0 0 10px 10px rgb(220, 220, 220);
+  width: 250px;
+  margin: auto;
+  margin-top: 250px;
+  padding: 15px 25px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  padding: 7px 15px;
+  font-size: 16px;
+}
+
+#logbtn {
+  margin-top: 15px;
+}
+
+#btn {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px 20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+#btn:hover {
+  background-color: blueviolet;
+}
+
+.messageBox {
+  height: 500px;
+  width: 600px;
+  padding: 25;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 2px solid grey;
+  background-color: azure;
+  overflow-y: scroll;
+}
