@@ -48,3 +48,20 @@ input {
   background-color: azure;
   overflow-y: scroll;
 }
+
+.userMessageBox {
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: rgba(230, 230, 230, 0.9);
+  width: fit-content;
+  margin-left: auto;
+  margin-bottom: 20px
+}
+
+.otherUserMessageBox {
+  padding: 5px 15px;
+  border-radius: 10px;
+  background-color: rgba(230, 230, 230, 0.9);
+  width: fit-content;
+  margin-bottom: 20px;
+}

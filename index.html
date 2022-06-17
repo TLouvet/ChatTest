@@ -25,64 +25,7 @@
   </main>
 </body>
 
-<script>
-  let userName = '';
-  const socket = io('https://chat-app-tl.herokuapp.com/');
-  socket.on('connect', function () {
-    console.log('Connected');
-
-    socket.emit('events', { test: 'test' });
-    socket.emit('identity', 0, response =>
-      console.log('Identity:', response),
-    );
-  });
-
-  socket.on('disconnect', function () {
-    document.getElementById('box').innerHTML += `<p>${userName} a quitté le chat`;
-  })
-
-  const handleMessageEmit = () => {
-    socket.emit('message', { data: userName + ": " + document.getElementById('message').value })
-    document.getElementById('message').value = '';
-  }
-
-  const handleInscription = () => {
-    userName = document.getElementById('userName').value;
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('box').style.display = 'unset';
-    document.getElementById('messageSend').style.display = 'unset';
-    socket.emit("message", { data: `Alerte: ${userName} rejoint le chat` })
-  }
-
-  const othermess = "padding: 10px 15px; border-radius: 10px; background-color: rgba(230,230,230,0.9); width: fit-content; margin-left: auto; margin-bottom: 20px";
-  const mymess = "padding: 5px 15px; border-radius: 10px; background-color: rgba(230,230,230,0.9); width: fit-content; margin-bottom: 20px";
-  const msg = [];
-  socket.on('message', ({ data }) => {
-    msg.push(data);
-    let str = '';
-    for (const elt of msg) {
-      if (elt.split(':')[0] === "Alerte") {
-        str += `<p style="color:red;">${elt}</p>`;
-      } else if (elt.split(':')[0] !== "Alerte" && elt.split(':')[0] !== userName) {
-        str += `<div style="${othermess}"> <p style="text-align: end; margin:0;"> <span style="font-weight: 800">${elt.split(':')[0]}:</span>${elt.split(':')[1]}</p> </div>`;
-      } else {
-        str += `<div style="${mymess}"><p style="margin: 0;"> <span style="font-weight: 800">${elt.split(':')[0]}:</span>${elt.split(':')[1]}</p></div>`;
-      }
-    }
-    document.getElementById('box').innerHTML = str;
-  })
-
-  document.getElementById('userName').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') handleInscription();
-  })
-
-  document.getElementById('message').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') handleMessageEmit();
-  })
-
-  document.getElementById('logbtn').addEventListener('click', handleInscription)
-  document.getElementById('btn').addEventListener('click', handleMessageEmit)
-
-</script>
+<script src="socket.js"></script>
+<script src="chat.js"></script>
 
 </html>
